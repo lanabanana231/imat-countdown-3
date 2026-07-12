@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Neural Interface | IMAT 2026</title>
+
+<style>
+
+*{
+    box-sizing:border-box;
+}
+
+body{
+    margin:0;
+    min-height:100vh;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    background:
+    radial-gradient(circle at top,#12304a,#050b12 60%);
+
+    font-family:"Courier New", monospace;
+
+    color:#e8f7ff;
+}
+
+
+.container{
+
+    width:95%;
+    max-width:1000px;
+
+    background:rgba(15,34,53,.75);
+
+    border:1px solid rgba(56,189,248,.25);
+
+    border-radius:25px;
+
+    padding:35px;
+
+    box-shadow:
+    0 0 40px rgba(56,189,248,.15),
+    inset 0 0 40px rgba(139,92,246,.08);
+
+    backdrop-filter:blur(15px);
+
+}
+
+
+.header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    margin-bottom:30px;
+
+}
+
+
+.title{
+
+    font-size:25px;
+
+    letter-spacing:3px;
+
+    color:#38bdf8;
+
+}
+
+
+.status{
+
+    color:#4ade80;
+
+    font-size:14px;
+
+}
+
+
+.center{
+
+    text-align:center;
+
+}
+
+
+h1{
+
+    margin:10px 0;
+
+    font-size:42px;
+
+    letter-spacing:4px;
+
+}
+
+
+.subtitle{
+
+    color:#89a9c4;
+
+}
+
+
+.timer{
+
+    margin-top:35px;
+
+    display:grid;
+
+    grid-template-columns:repeat(6,1fr);
+
+    gap:15px;
+
+}
+
+
+.box{
+
+    background:#0b1c2d;
+
+    border-radius:18px;
+
+    padding:20px 10px;
+
+    border:1px solid rgba(56,189,248,.15);
+
+}
+
+
+.number{
+
+    font-size:38px;
+
+    font-weight:bold;
+
+    color:#38bdf8;
+
+    text-shadow:
+    0 0 15px rgba(56,189,248,.8);
+
+}
+
+
+.label{
+
+    margin-top:8px;
+
+    color:#89a9c4;
+
+    font-size:12px;
+
+}
+
+
+.panel{
+
+    margin-top:25px;
+
+    padding:20px;
+
+    background:#081522;
+
+    border-radius:18px;
+
+    border:1px solid rgba(139,92,246,.25);
+
+}
+
+
+.progress{
+
+    height:14px;
+
+    background:#142b40;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    margin-top:12px;
+
+}
+
+
+.progress-fill{
+
+    height:100%;
+
+    width:0%;
+
+    background:linear-gradient(
+    90deg,
+    #38bdf8,
+    #8b5cf6
+    );
+
+    box-shadow:0 0 20px #38bdf8;
+
+}
+
+
+.eeg{
+
+    margin-top:20px;
+
+    height:60px;
+
+    overflow:hidden;
+
+}
+
+
+.wave{
+
+    font-size:35px;
+
+    color:#38bdf8;
+
+    animation:move 3s linear infinite;
+
+    white-space:nowrap;
+
+}
+
+
+@keyframes move{
+
+from{
+transform:translateX(0);
+}
+
+to{
+transform:translateX(-200px);
+}
+
+}
+
+
+.fact{
+
+    color:#c4d9ed;
+
+    line-height:1.6;
+
+}
+
+
+.footer{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    color:#64748b;
+
+}
+
+
+@media(max-width:700px){
+
+.timer{
+
+grid-template-columns:repeat(3,1fr);
+
+}
+
+h1{
+
+font-size:28px;
+
+}
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<div class="header">
+
+<div class="title">
+🧠 NEURAL INTERFACE v1.0
+</div>
+
+<div class="status">
+● ONLINE
+</div>
+
+</div>
+
+
+<div class="center">
+
+
+<h1>IMAT 2026</h1>
+
+<div class="subtitle">
+Cognitive Readiness Countdown
+</div>
+
+
+<div class="timer">
+
+
+<div class="box">
+<div id="months" class="number">0</div>
+<div class="label">MONTHS</div>
+</div>
+
+
+<div class="box">
+<div id="weeks" class="number">0</div>
+<div class="label">WEEKS</div>
+</div>
+
+
+<div class="box">
+<div id="days" class="number">0</div>
+<div class="label">DAYS</div>
+</div>
+
+
+<div class="box">
+<div id="hours" class="number">0</div>
+<div class="label">HOURS</div>
+</div>
+
+
+<div class="box">
+<div id="minutes" class="number">0</div>
+<div class="label">MINUTES</div>
+</div>
+
+
+<div class="box">
+<div id="seconds" class="number">0</div>
+<div class="label">SECONDS</div>
+</div>
+
+
+</div>
+
+
+</div>
+
+
+<div class="panel">
+
+
+<div>
+COGNITIVE PREPARATION:
+<span id="percent">0%</span>
+</div>
+
+
+<div class="progress">
+
+<div class="progress-fill" id="progress"></div>
+
+</div>
+
+
+</div>
+
+
+
+<div class="panel">
+
+
+<div class="eeg">
+
+<div class="wave">
+▁▂▃▅▂▁▂▄▆▅▃▂▁▂▅▇▅▃▂▁▂▄▆▃▁
+</div>
+
+</div>
+
+
+<div>
+CURRENT MODULE:
+<span id="module">BIOLOGY</span>
+</div>
+
+
+<br>
+
+
+<div class="fact" id="fact">
+
+🧠 Loading neural fact...
+
+</div>
+
+
+</div>
+
+
+
+<div class="footer">
+
+SYSTEM DIRECTIVE:
+<br>
+"No grief. Just business."
+
+<br><br>
+
+Target: Medicine 🩺
+
+</div>
+
+
+</div>
+
+
+
+<script>
+
+
+const exam =
+new Date("2026-09-30T08:00:00+02:00");
+
+
+const start =
+new Date("2026-07-05T00:00:00+02:00");
+
+
+
+function update(){
+
+
+let now=new Date();
+
+
+let diff=exam-now;
+
+
+if(diff<=0){
+
+document.querySelector(".container").innerHTML=
+"<h1>MISSION STARTED 🩺</h1>";
+
+return;
+
+}
+
+
+
+let seconds=Math.floor(diff/1000);
+
+let days=Math.floor(seconds/86400);
+
+seconds%=86400;
+
+
+let hours=Math.floor(seconds/3600);
+
+seconds%=3600;
+
+
+let minutes=Math.floor(seconds/60);
+
+seconds%=60;
+
+
+
+let months=Math.floor(days/30);
+
+days%=30;
+
+
+let weeks=Math.floor(days/7);
+
+days%=7;
+
+
+
+document.getElementById("months").innerHTML=months;
+
+document.getElementById("weeks").innerHTML=weeks;
+
+document.getElementById("days").innerHTML=days;
+
+document.getElementById("hours").innerHTML=hours;
+
+document.getElementById("minutes").innerHTML=minutes;
+
+document.getElementById("seconds").innerHTML=seconds;
+
+
+
+let progress =
+((now-start)/(exam-start))*100;
+
+
+progress=Math.max(0,Math.min(100,progress));
+
+
+document.getElementById("progress").style.width=
+progress+"%";
+
+
+document.getElementById("percent").innerHTML=
+progress.toFixed(1)+"%";
+
+}
+
+
+
+const facts=[
+
+"Your brain contains approximately 86 billion neurons.",
+
+"Myelin allows electrical signals to travel faster along axons.",
+
+"The hippocampus plays a key role in memory formation.",
+
+"The human cortex is only a few millimeters thick.",
+
+"Neurons communicate using electrical and chemical signals.",
+
+"Neuroplasticity allows the brain to adapt throughout life."
+
+];
+
+
+
+const modules=[
+
+"BIOLOGY",
+
+"CHEMISTRY",
+
+"PHYSICS",
+
+"LOGICAL REASONING",
+
+"GENERAL KNOWLEDGE"
+
+];
+
+
+
+let i=0;
+
+
+setInterval(()=>{
+
+i++;
+
+document.getElementById("fact").innerHTML=
+"🧠 Neural Fact: "+
+facts[i%facts.length];
+
+
+document.getElementById("module").innerHTML=
+modules[i%modules.length];
+
+
+},10000);
+
+
+
+update();
+
+setInterval(update,1000);
+
+
+</script>
+
+
+</body>
+</html>
